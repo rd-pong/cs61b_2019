@@ -62,12 +62,12 @@ public class NBody {
         double dt = Double.parseDouble(args[1]);
         String filename = args[2];
 
-        double in_radius = readRadius(filename);
-        Body[] in_bodies = readBodies(filename);
+        double radius = readRadius(filename);
+        Body[] bodies = readBodies(filename);
 
         // Drawing the Background
         StdDraw.enableDoubleBuffering();
-        StdDraw.setScale(-in_radius, in_radius);
+        StdDraw.setScale(-radius, radius);
         StdDraw.clear();
         // StdDraw.picture(0, 0, imageToDraw);
 
@@ -80,32 +80,32 @@ public class NBody {
 
         // Creating an Animation
         for (double time = 0; time < T; time++) {
-            double[] xForces = new double[in_bodies.length];
-            double[] yForces = new double[in_bodies.length];
+            double[] xForces = new double[bodies.length];
+            double[] yForces = new double[bodies.length];
 
-            for (int i = 0; i < in_bodies.length; i++) {
-                xForces[i] = in_bodies[i].calcNetForceExertedByX(in_bodies);
-                yForces[i] = in_bodies[i].calcNetForceExertedByY(in_bodies);
+            for (int i = 0; i < bodies.length; i++) {
+                xForces[i] = bodies[i].calcNetForceExertedByX(bodies);
+                yForces[i] = bodies[i].calcNetForceExertedByY(bodies);
             }
 
             // After calculating the net forces for every Body, call update
-            for (int i = 0; i < in_bodies.length; i++) {
-                in_bodies[i].update(dt, xForces[i], yForces[i]);
+            for (int i = 0; i < bodies.length; i++) {
+                bodies[i].update(dt, xForces[i], yForces[i]);
             }
 
             StdDraw.picture(0, 0, imageToDraw);
-            for (Body in_bodies_elem : in_bodies) {
+            for (Body in_bodies_elem : bodies) {
                 in_bodies_elem.draw();
             }
             StdDraw.show();
-            StdDraw.pause(10);
+            // StdDraw.pause(10);
         }
 
-        StdOut.printf("%d\n", in_bodies.length);
-        StdOut.printf("%.2e\n", in_radius);
-        for (int i = 0; i < in_bodies.length; i++) {
-            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n", in_bodies[i].xxPos, in_bodies[i].yyPos,
-                    in_bodies[i].xxVel, in_bodies[i].yyVel, in_bodies[i].mass, in_bodies[i].imgFileName);
+        StdOut.printf("%d\n", bodies.length);
+        StdOut.printf("%.2e\n", radius);
+        for (int i = 0; i < bodies.length; i++) {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n", bodies[i].xxPos, bodies[i].yyPos,
+                    bodies[i].xxVel, bodies[i].yyVel, bodies[i].mass, bodies[i].imgFileName);
         }
 
     }
